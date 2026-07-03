@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{5D71C247-E44B-4D42-80C3-1A9F0AD102B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceTracker.Api", "backend\FinanceTracker.Api\FinanceTracker.Api.csproj", "{EBF1A5D6-8E2F-4A80-8A5A-FE3C8DFC50BE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EBF1A5D6-8E2F-4A80-8A5A-FE3C8DFC50BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBF1A5D6-8E2F-4A80-8A5A-FE3C8DFC50BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBF1A5D6-8E2F-4A80-8A5A-FE3C8DFC50BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBF1A5D6-8E2F-4A80-8A5A-FE3C8DFC50BE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EBF1A5D6-8E2F-4A80-8A5A-FE3C8DFC50BE} = {5D71C247-E44B-4D42-80C3-1A9F0AD102B5}
+	EndGlobalSection
+EndGlobal
