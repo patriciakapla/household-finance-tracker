@@ -18,3 +18,8 @@ reset:
 
 psql:
 	docker compose exec $(DB_SERVICE) psql -U $(POSTGRES_USER) -d $(POSTGRES_DB)
+
+run-api:
+	dotnet run --project backend/FinanceTracker.Api
+
+run: up run-api
