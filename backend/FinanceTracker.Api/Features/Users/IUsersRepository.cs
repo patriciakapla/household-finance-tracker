@@ -4,5 +4,6 @@ namespace FinanceTracker.Api.Features.Users
     {
         Task<User> CreateAsync(CreateUserRequest user);
         Task<User?> DeleteAsync(Guid id);
+        Task<IEnumerable<UserDto>> ListAsync();
     }
 }
