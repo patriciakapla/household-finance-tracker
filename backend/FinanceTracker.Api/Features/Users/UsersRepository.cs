@@ -3,7 +3,7 @@ using FinanceTracker.Api.Data;
 
 namespace FinanceTracker.Api.Features.Users
 {
-    public class UsersRepository
+    public class UsersRepository : IUsersRepository
     {
         private readonly IDbConnectionFactory _connectionFactory;
 
@@ -14,8 +14,7 @@ namespace FinanceTracker.Api.Features.Users
 
         public async Task<User> CreateAsync(CreateUserRequest user)
         {
-            // The SQL inserts only fields controlled by the client.
-            // id and active are filled by PostgreSQL defaults defined in init.sql.
+
             const string sql = """
                 INSERT INTO users ("name", age)
                 VALUES (@Name, @Age)
@@ -24,9 +23,23 @@ namespace FinanceTracker.Api.Features.Users
 
             using var connection = _connectionFactory.CreateConnection();
 
-            // Dapper maps @Name and @Age from the CreateUserRequest properties.
-            // QuerySingleAsync returns the row produced by RETURNING.
+
             return await connection.QuerySingleAsync<User>(sql, user);
+        }
+
+        public async Task<User?> DeleteAsync(Guid id)
+        {
+            const string sql = """
+                UPDATE users
+                SET active = false
+                WHERE id = @Id
+                AND active = true
+                RETURNING id, "name", age, active;
+                """;
+
+            using var connection = _connectionFactory.CreateConnection();
+
+            return await connection.QuerySingleOrDefaultAsync<User>(sql, new { Id = id });
         }
     }
 }

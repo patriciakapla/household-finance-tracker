@@ -6,9 +6,9 @@ namespace FinanceTracker.Api.Features.Users
     [Route("users")]
     public class UsersController : ControllerBase
     {
-        private readonly UsersRepository _usersRepository;
+        private readonly IUsersRepository _usersRepository;
 
-        public UsersController(UsersRepository usersRepository)
+        public UsersController(IUsersRepository usersRepository)
         {
             _usersRepository = usersRepository;
         }
@@ -36,6 +36,20 @@ namespace FinanceTracker.Api.Features.Users
             };
 
             return Created($"/users/{response.Id}", response);
+        }
+
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var deletedUser = await _usersRepository.DeleteAsync(id);
+
+            if (deletedUser is null)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
         }
     }
 }

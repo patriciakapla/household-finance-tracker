@@ -11,7 +11,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
 
-builder.Services.AddScoped<UsersRepository>();
+builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 
 var app = builder.Build();
 
