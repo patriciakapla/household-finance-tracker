@@ -1,7 +1,7 @@
 
 namespace FinanceTracker.Api.Features.Transactions
 {
-    public class TransactionReportDto
+    public class TransactionsReportDto
     {
         public string Username {get; set;} = string.Empty;
         public double Revenue {get; set;} 

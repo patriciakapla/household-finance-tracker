@@ -1,5 +1,6 @@
 using FinanceTracker.Api.Data;
 using FinanceTracker.Api.Features.Users;
+using FinanceTracker.Api.Features.Transactions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
 
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+builder.Services.AddScoped<ITransactionsRepository, TransactionsRepository>();
 
 var app = builder.Build();
 

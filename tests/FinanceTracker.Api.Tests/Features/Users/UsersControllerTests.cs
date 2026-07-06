@@ -1,4 +1,5 @@
 using FinanceTracker.Api.Features.Users;
+using FinanceTracker.Api.Tests.Fakes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceTracker.Api.Tests.Features.Users;
@@ -91,38 +92,4 @@ public class UsersControllerTests
         Assert.Equal(43, responseList[1].Age);
     }
 
-    private sealed class FakeUsersRepository : IUsersRepository
-    {
-        private readonly User? _userToDelete;
-        private readonly IEnumerable<UserDto> _usersToList;
-
-        public FakeUsersRepository(
-            User? userToDelete = null,
-            IEnumerable<UserDto>? usersToList = null)
-        {
-            _userToDelete = userToDelete;
-            _usersToList = usersToList ?? Enumerable.Empty<UserDto>();
-        }
-
-        public Task<User> CreateAsync(CreateUserRequest user)
-        {
-            return Task.FromResult(new User
-            {
-                Id = Guid.NewGuid(),
-                Name = user.Name,
-                Age = user.Age,
-                Active = true
-            });
-        }
-
-        public Task<User?> DeleteAsync(Guid id)
-        {
-            return Task.FromResult(_userToDelete);
-        }
-
-        public Task<IEnumerable<UserDto>> ListAsync()
-        {
-            return Task.FromResult(_usersToList);
-        }
-    }
 }

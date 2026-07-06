@@ -55,6 +55,20 @@ namespace FinanceTracker.Api.Features.Users
             return await connection.QueryAsync<UserDto>(sql);
         }
 
+        public async Task<User?> GetByIdAsync(Guid id)
+        {
+            const string sql = """
+                SELECT id, "name", age, active
+                FROM users
+                WHERE id = @Id
+                AND active = true;
+            """;
+
+            using var connection = _connectionFactory.CreateConnection();
+
+            return await connection.QuerySingleOrDefaultAsync<User>(sql, new {Id = id});
+        }
+
 
     }
 }
