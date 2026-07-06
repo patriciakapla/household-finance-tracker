@@ -33,5 +33,46 @@ namespace FinanceTracker.Api.Features.Transactions
             });
         }
 
+        public async Task<IEnumerable<Transaction>> ListAsync()
+        {
+            const string sql = """
+                SELECT 
+                t.id, 
+                t.user_id AS UserId,
+                t."description", 
+                t.amount, 
+                t."type", 
+                t.created_at AS CreatedAt
+                FROM transactions t
+                JOIN users u ON t.user_id = u.id
+                WHERE u.active = true
+                ORDER BY created_at;
+            """;
+
+            using var connection =  _connectionFactory.CreateConnection();
+
+            return await connection.QueryAsync<Transaction>(sql);
+        }
+
+        public async Task<IEnumerable<TransactionsReportDto>> GenerateReportAsync()
+        {
+            const string sql = """
+                SELECT
+                u.id AS UserId,
+                u.name AS Username,
+                SUM(CASE WHEN t.type = 'revenue' THEN t.amount ELSE 0 END) AS Revenue,
+                SUM(CASE WHEN t.type = 'expense' THEN t.amount ELSE 0 END) AS Expenses,
+                SUM(CASE WHEN t.type = 'revenue' THEN t.amount ELSE 0 END) -
+                SUM(CASE WHEN t.type = 'expense' THEN t.amount ELSE 0 END) AS Balance
+                FROM users u
+                LEFT JOIN transactions t ON u.id = t.user_id
+                WHERE u.active = true
+                GROUP BY u.id;
+            """;
+
+            using var connection =  _connectionFactory.CreateConnection();
+
+            return await connection.QueryAsync<TransactionsReportDto>(sql);
+        }
     }
 }

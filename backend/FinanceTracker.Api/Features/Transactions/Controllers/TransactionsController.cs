@@ -50,6 +50,22 @@ namespace FinanceTracker.Api.Features.Transactions
             return Created($"/transactions/{response.Id}", response);
 
         }
-    }
 
+
+    [HttpGet]
+        public async Task<ActionResult<IEnumerable<TransactionDto>>> List()
+        {
+            var transactions =  await _transactionsRepository.ListAsync();
+
+            return Ok(transactions);
+        }
+
+    [HttpGet("report")]
+        public async Task<ActionResult<IEnumerable<TransactionsReportDto>>> GenerateReport()
+        {
+            var report =  await _transactionsRepository.GenerateReportAsync();
+
+            return Ok(report);
+        }
+    }
 }

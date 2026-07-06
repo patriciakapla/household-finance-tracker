@@ -51,6 +51,8 @@ namespace FinanceTracker.Api.Features.Users
 
             return NoContent();
         }
+
+        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDto>>> ListAsync()
         {
