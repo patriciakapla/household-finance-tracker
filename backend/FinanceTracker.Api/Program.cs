@@ -1,19 +1,19 @@
 using FinanceTracker.Api.Data;
-using FinanceTracker.Api.Features.Users;
 using FinanceTracker.Api.Features.Transactions;
+using FinanceTracker.Api.Features.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
 const string FrontendCorsPolicy = "FrontendCorsPolicy";
 
-  builder.Services
-      .AddControllers()
-      .AddJsonOptions(options =>
-      {
-          options.JsonSerializerOptions.Converters.Add(
-              new System.Text.Json.Serialization.JsonStringEnumConverter()
-          );
-      });
+builder.Services
+    .AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(
+            new System.Text.Json.Serialization.JsonStringEnumConverter()
+        );
+    });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>

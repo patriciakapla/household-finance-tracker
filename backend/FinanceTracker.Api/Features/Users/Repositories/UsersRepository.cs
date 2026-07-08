@@ -1,4 +1,5 @@
 using Dapper;
+
 using FinanceTracker.Api.Data;
 
 namespace FinanceTracker.Api.Features.Users
@@ -66,7 +67,7 @@ namespace FinanceTracker.Api.Features.Users
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QuerySingleOrDefaultAsync<User>(sql, new {Id = id});
+            return await connection.QuerySingleOrDefaultAsync<User>(sql, new { Id = id });
         }
 
 

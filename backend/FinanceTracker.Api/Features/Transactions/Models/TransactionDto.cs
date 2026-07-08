@@ -3,12 +3,12 @@ namespace FinanceTracker.Api.Features.Transactions
 {
     public class TransactionDto
     {
-        public Guid Id {get; set;}
-        public Guid UserId {get; set;}
-        public string UserName {get; set;} = string.Empty;
-        public string Description {get; set;} = string.Empty;
-        public decimal Amount {get; set;}
-        public TransactionType Type {get; set;} 
-        public DateTimeOffset CreatedAt {get; set;}
+        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
+        public string UserName { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public decimal Amount { get; set; }
+        public TransactionType Type { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
     }
 }

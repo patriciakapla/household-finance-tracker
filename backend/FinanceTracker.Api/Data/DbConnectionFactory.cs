@@ -1,4 +1,5 @@
 using System.Data;
+
 using Npgsql;
 
 namespace FinanceTracker.Api.Data
@@ -6,7 +7,7 @@ namespace FinanceTracker.Api.Data
     public class DbConnectionFactory : IDbConnectionFactory
     {
         private readonly string _connectionString;
-        
+
         public DbConnectionFactory(IConfiguration configuration)
         {
             _connectionString =

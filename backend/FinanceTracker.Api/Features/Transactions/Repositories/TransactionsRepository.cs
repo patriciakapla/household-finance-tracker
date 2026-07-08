@@ -1,4 +1,5 @@
 using Dapper;
+
 using FinanceTracker.Api.Data;
 
 namespace FinanceTracker.Api.Features.Transactions
@@ -14,7 +15,7 @@ namespace FinanceTracker.Api.Features.Transactions
 
         public async Task<Transaction> CreateAsync(CreateTransactionRequest transaction)
         {
-        
+
             const string sql = """
                 INSERT INTO transactions 
                 (user_id, "description", amount, "type")
@@ -24,7 +25,7 @@ namespace FinanceTracker.Api.Features.Transactions
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QuerySingleAsync<Transaction>(sql, new 
+            return await connection.QuerySingleAsync<Transaction>(sql, new
             {
                 transaction.UserId,
                 transaction.Description,
@@ -50,7 +51,7 @@ namespace FinanceTracker.Api.Features.Transactions
                 ORDER BY created_at;
             """;
 
-            using var connection =  _connectionFactory.CreateConnection();
+            using var connection = _connectionFactory.CreateConnection();
 
             return await connection.QueryAsync<TransactionDto>(sql);
         }
@@ -71,7 +72,7 @@ namespace FinanceTracker.Api.Features.Transactions
                 GROUP BY u.id;
             """;
 
-            using var connection =  _connectionFactory.CreateConnection();
+            using var connection = _connectionFactory.CreateConnection();
 
             return await connection.QueryAsync<TransactionsReportDto>(sql);
         }

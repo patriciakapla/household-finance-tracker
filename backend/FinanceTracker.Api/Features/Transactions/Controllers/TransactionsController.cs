@@ -1,6 +1,7 @@
 
-using Microsoft.AspNetCore.Mvc;
 using FinanceTracker.Api.Features.Users;
+
+using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceTracker.Api.Features.Transactions
 {
@@ -20,7 +21,7 @@ namespace FinanceTracker.Api.Features.Transactions
             _usersRepository = usersRepository;
         }
 
-    [HttpPost]
+        [HttpPost]
         public async Task<ActionResult<TransactionDto>> Create(CreateTransactionRequest transaction)
         {
             DateTime today = DateTime.Today;
@@ -34,7 +35,7 @@ namespace FinanceTracker.Api.Features.Transactions
             {
                 return NotFound();
             }
-        
+
             if (user.BirthDate > max && transaction.Type == TransactionType.revenue)
             {
                 return BadRequest();
@@ -57,20 +58,20 @@ namespace FinanceTracker.Api.Features.Transactions
         }
 
 
-    [HttpGet]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<TransactionDto>>> List()
         {
-            var transactions =  await _transactionsRepository.ListAsync();
+            var transactions = await _transactionsRepository.ListAsync();
 
-            return Ok(new{Data=transactions});
+            return Ok(new { Data = transactions });
         }
 
-    [HttpGet("report")]
+        [HttpGet("report")]
         public async Task<ActionResult<IEnumerable<TransactionsReportDto>>> GenerateReport()
         {
-            var report =  await _transactionsRepository.GenerateReportAsync();
+            var report = await _transactionsRepository.GenerateReportAsync();
 
-            return Ok(new{Data=report});
+            return Ok(new { Data = report });
         }
     }
 }

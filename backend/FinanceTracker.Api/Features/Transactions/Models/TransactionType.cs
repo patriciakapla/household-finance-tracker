@@ -7,5 +7,5 @@ namespace FinanceTracker.Api.Features.Transactions
     {
         revenue,
         expense
-    } 
+    }
 }
