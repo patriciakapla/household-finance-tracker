@@ -16,14 +16,16 @@ namespace FinanceTracker.Api.Features.Users
         [HttpPost]
         public async Task<ActionResult<UserDto>> Create(CreateUserRequest request)
         {
+            DateTime today = DateTime.Today;
+
             if (string.IsNullOrWhiteSpace(request.Name))
             {
-                return BadRequest("Name is required.");
+                return BadRequest();
             }
 
-            if (request.Age < 0)
+            if (request.BirthDate >= today)
             {
-                return BadRequest("Age cannot be negative.");
+                return BadRequest();
             }
 
             var createdUser = await _usersRepository.CreateAsync(request);
@@ -32,7 +34,7 @@ namespace FinanceTracker.Api.Features.Users
             {
                 Id = createdUser.Id,
                 Name = createdUser.Name,
-                Age = createdUser.Age
+                BirthDate = createdUser.BirthDate
             };
 
             return Created($"/users/{response.Id}", response);
@@ -58,7 +60,8 @@ namespace FinanceTracker.Api.Features.Users
         {
             var users = await _usersRepository.ListAsync();
 
-            return Ok(users);
+
+            return Ok(new{Data = users});
         }
     }
 }

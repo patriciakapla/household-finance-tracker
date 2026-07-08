@@ -23,6 +23,11 @@ namespace FinanceTracker.Api.Features.Transactions
     [HttpPost]
         public async Task<ActionResult<TransactionDto>> Create(CreateTransactionRequest transaction)
         {
+            DateTime today = DateTime.Today;
+
+            DateTime max = today.AddYears(-18);
+
+
             var user = await _usersRepository.GetByIdAsync(transaction.UserId);
 
             if (user == null)
@@ -30,7 +35,7 @@ namespace FinanceTracker.Api.Features.Transactions
                 return NotFound();
             }
         
-            if (user.Age < 18 && transaction.Type == TransactionType.Revenue)
+            if (user.BirthDate > max && transaction.Type == TransactionType.revenue)
             {
                 return BadRequest();
             }
@@ -57,7 +62,7 @@ namespace FinanceTracker.Api.Features.Transactions
         {
             var transactions =  await _transactionsRepository.ListAsync();
 
-            return Ok(transactions);
+            return Ok(new{Data=transactions});
         }
 
     [HttpGet("report")]
@@ -65,7 +70,7 @@ namespace FinanceTracker.Api.Features.Transactions
         {
             var report =  await _transactionsRepository.GenerateReportAsync();
 
-            return Ok(report);
+            return Ok(new{Data=report});
         }
     }
 }

@@ -8,7 +8,7 @@ CREATE TYPE transaction_type AS ENUM (
 CREATE TABLE IF NOT EXISTS users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     "name" VARCHAR(255) NOT NULL,
-    age INT NOT NULL,
+    birth_date DATE NOT NULL,
     active BOOL NOT NULL DEFAULT TRUE
 );
 

@@ -33,7 +33,7 @@ namespace FinanceTracker.Api.Features.Transactions
             });
         }
 
-        public async Task<IEnumerable<Transaction>> ListAsync()
+        public async Task<IEnumerable<TransactionDto>> ListAsync()
         {
             const string sql = """
                 SELECT 
@@ -42,16 +42,17 @@ namespace FinanceTracker.Api.Features.Transactions
                 t."description", 
                 t.amount, 
                 t."type", 
-                t.created_at AS CreatedAt
+                t.created_at AS CreatedAt,
+                u.name AS UserName
                 FROM transactions t
-                JOIN users u ON t.user_id = u.id
+                LEFT JOIN users u ON t.user_id = u.id
                 WHERE u.active = true
                 ORDER BY created_at;
             """;
 
             using var connection =  _connectionFactory.CreateConnection();
 
-            return await connection.QueryAsync<Transaction>(sql);
+            return await connection.QueryAsync<TransactionDto>(sql);
         }
 
         public async Task<IEnumerable<TransactionsReportDto>> GenerateReportAsync()

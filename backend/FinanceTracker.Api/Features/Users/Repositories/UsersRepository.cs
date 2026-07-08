@@ -16,9 +16,9 @@ namespace FinanceTracker.Api.Features.Users
         {
 
             const string sql = """
-                INSERT INTO users ("name", age)
-                VALUES (@Name, @Age)
-                RETURNING id, "name", age, active;
+                INSERT INTO users ("name", birth_date)
+                VALUES (@Name, @BirthDate)
+                RETURNING id, "name", birth_date::timestamp AS BirthDate, active;
                 """;
 
             using var connection = _connectionFactory.CreateConnection();
@@ -34,7 +34,7 @@ namespace FinanceTracker.Api.Features.Users
                 SET active = false
                 WHERE id = @Id
                 AND active = true
-                RETURNING id, "name", age, active;
+                RETURNING id, "name", birth_date::timestamp AS BirthDate, active;
                 """;
 
             using var connection = _connectionFactory.CreateConnection();
@@ -44,7 +44,7 @@ namespace FinanceTracker.Api.Features.Users
         public async Task<IEnumerable<UserDto>> ListAsync()
         {
             const string sql = """
-                SELECT id, "name", age 
+                SELECT id, "name", birth_date::timestamp AS BirthDate
                 FROM users
                 WHERE active = true
                 ORDER BY "name";
@@ -58,7 +58,7 @@ namespace FinanceTracker.Api.Features.Users
         public async Task<User?> GetByIdAsync(Guid id)
         {
             const string sql = """
-                SELECT id, "name", age, active
+                SELECT id, "name", birth_date::timestamp AS BirthDate, active
                 FROM users
                 WHERE id = @Id
                 AND active = true;
