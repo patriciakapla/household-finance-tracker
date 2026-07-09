@@ -4,16 +4,19 @@ namespace FinanceTracker.Api.Tests.Fakes;
 
 public class FakeTransactionsRepository : ITransactionsRepository
 {
-    private readonly IEnumerable<Transaction> _transactionList;
+    private readonly IEnumerable<TransactionDto> _transactionList;
     private readonly IEnumerable<TransactionsReportDto> _transactionsReport;
+    private readonly ReportTotalDto _reportTotal;
 
     public FakeTransactionsRepository(
-        IEnumerable<Transaction>? transactionList = null,
-        IEnumerable<TransactionsReportDto>? transactionsReport = null
+        IEnumerable<TransactionDto>? transactionList = null,
+        IEnumerable<TransactionsReportDto>? transactionsReport = null,
+        ReportTotalDto? reportTotal = null
     )
     {
         _transactionList = transactionList ?? [];
         _transactionsReport = transactionsReport ?? [];
+        _reportTotal = reportTotal ?? new ReportTotalDto();
     }
 
     public Task<Transaction> CreateAsync(CreateTransactionRequest transaction)
@@ -29,13 +32,18 @@ public class FakeTransactionsRepository : ITransactionsRepository
         });
     }
 
-    public Task<IEnumerable<Transaction>> ListAsync()
+    public Task<IEnumerable<TransactionDto>> ListAsync()
     {
         return Task.FromResult(_transactionList);
     }
+
     public Task<IEnumerable<TransactionsReportDto>> GenerateReportAsync()
     {
         return Task.FromResult(_transactionsReport);
     }
-}
 
+    public Task<ReportTotalDto> GenerateTotalAsync()
+    {
+        return Task.FromResult(_reportTotal);
+    }
+}

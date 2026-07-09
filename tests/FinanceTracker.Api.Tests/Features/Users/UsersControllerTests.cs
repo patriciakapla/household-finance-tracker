@@ -1,5 +1,6 @@
 using FinanceTracker.Api.Features.Users;
 using FinanceTracker.Api.Tests.Fakes;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceTracker.Api.Tests.Features.Users;
@@ -14,7 +15,7 @@ public class UsersControllerTests
         var request = new CreateUserRequest
         {
             Name = "Buffy Summers",
-            Age = 16
+            BirthDate = DateTime.Today.AddYears(-18)
         };
 
         var result = await controller.Create(request);
@@ -24,7 +25,7 @@ public class UsersControllerTests
 
         Assert.NotEqual(Guid.Empty, response.Id);
         Assert.Equal("Buffy Summers", response.Name);
-        Assert.Equal(16, response.Age);
+        Assert.Equal(request.BirthDate, response.BirthDate);
         Assert.Equal($"/users/{response.Id}", createdResult.Location);
     }
 
@@ -37,7 +38,7 @@ public class UsersControllerTests
             {
                 Id = userId,
                 Name = "Buffy Summers",
-                Age = 16,
+                BirthDate = DateTime.Today.AddYears(-18),
                 Active = false
             });
         var controller = new UsersController(repository);
@@ -67,13 +68,13 @@ public class UsersControllerTests
             {
                 Id = Guid.NewGuid(),
                 Name = "Buffy Summers",
-                Age = 16
+                BirthDate = DateTime.Today.AddYears(-18)
             },
             new UserDto
             {
                 Id = Guid.NewGuid(),
                 Name = "Rupert Giles",
-                Age = 43
+                BirthDate = DateTime.Today.AddYears(-43)
             }
         };
         var repository = new FakeUsersRepository(usersToList: users);
@@ -82,14 +83,20 @@ public class UsersControllerTests
         var result = await controller.ListAsync();
 
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        var response = Assert.IsAssignableFrom<IEnumerable<UserDto>>(okResult.Value);
+        var response = Assert.IsAssignableFrom<IEnumerable<UserDto>>(GetData(okResult.Value));
         var responseList = response.ToList();
 
         Assert.Equal(2, responseList.Count);
         Assert.Equal("Buffy Summers", responseList[0].Name);
-        Assert.Equal(16, responseList[0].Age);
+        Assert.Equal(users[0].BirthDate, responseList[0].BirthDate);
         Assert.Equal("Rupert Giles", responseList[1].Name);
-        Assert.Equal(43, responseList[1].Age);
+        Assert.Equal(users[1].BirthDate, responseList[1].BirthDate);
     }
 
+    private static object? GetData(object? value)
+    {
+        Assert.NotNull(value);
+
+        return value.GetType().GetProperty("Data")?.GetValue(value);
+    }
 }

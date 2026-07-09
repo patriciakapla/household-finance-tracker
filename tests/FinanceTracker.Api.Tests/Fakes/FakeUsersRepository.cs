@@ -24,7 +24,7 @@ public class FakeUsersRepository : IUsersRepository
         {
             Id = Guid.NewGuid(),
             Name = user.Name,
-            Age = user.Age,
+            BirthDate = user.BirthDate,
             Active = true
         });
     }

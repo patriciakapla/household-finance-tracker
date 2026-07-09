@@ -1,6 +1,7 @@
 using FinanceTracker.Api.Features.Transactions;
 using FinanceTracker.Api.Features.Users;
 using FinanceTracker.Api.Tests.Fakes;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceTracker.Api.Tests.Features.Transactions;
@@ -19,7 +20,7 @@ public class TransactionsControllerTests
             UserId = userId,
             Description = "Research",
             Amount = 125.9m,
-            Type = TransactionType.Revenue
+            Type = TransactionType.revenue
         };
 
         var result = await controller.Create(request);
@@ -31,7 +32,7 @@ public class TransactionsControllerTests
         Assert.Equal(userId, response.UserId);
         Assert.Equal("Research", response.Description);
         Assert.Equal(125.9m, response.Amount);
-        Assert.Equal(TransactionType.Revenue, response.Type);
+        Assert.Equal(TransactionType.revenue, response.Type);
         Assert.Equal($"/transactions/{response.Id}", createdResult.Location);
     }
 
@@ -60,7 +61,7 @@ public class TransactionsControllerTests
             UserId = userId,
             Description = "Vampire slaying",
             Amount = 500m,
-            Type = TransactionType.Revenue
+            Type = TransactionType.revenue
         });
 
         Assert.IsType<BadRequestResult>(result.Result);
@@ -80,7 +81,7 @@ public class TransactionsControllerTests
         var response = Assert.IsType<TransactionDto>(createdResult.Value);
 
         Assert.Equal(userId, response.UserId);
-        Assert.Equal(TransactionType.Expense, response.Type);
+        Assert.Equal(TransactionType.expense, response.Type);
     }
 
     private static CreateTransactionRequest ExpenseRequest(Guid userId)
@@ -90,7 +91,7 @@ public class TransactionsControllerTests
             UserId = userId,
             Description = "Research expenses",
             Amount = 42.75m,
-            Type = TransactionType.Expense
+            Type = TransactionType.expense
         };
     }
 
@@ -100,7 +101,7 @@ public class TransactionsControllerTests
         {
             Id = id,
             Name = "Buffy Summers",
-            Age = 16,
+            BirthDate = DateTime.Today.AddYears(-16),
             Active = true
         };
     }
@@ -111,7 +112,7 @@ public class TransactionsControllerTests
         {
             Id = id,
             Name = "Rupert Giles",
-            Age = 43,
+            BirthDate = DateTime.Today.AddYears(-43),
             Active = true
         };
     }
