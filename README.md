@@ -2,6 +2,8 @@
 
 API para controle de gastos residenciais desenvolvida em .NET.
 
+Para conhecer as decisões arquiteturais, veja o arquivo adr.md
+
 ## Requisitos
 
 - .NET 8 SDK
@@ -18,18 +20,10 @@ Crie o arquivo `.env` a partir do exemplo:
 cp .env.example .env
 ```
 
-Edite o valor de `POSTGRES_PASSWORD` no arquivo `.env`, se necessário.
-
 Suba o banco:
 
 ```bash
 docker compose up -d
-```
-
-Ou usando o Makefile:
-
-```bash
-make up
 ```
 
 ## Configuração da connection string da API
@@ -41,9 +35,9 @@ A connection string local deve ser configurada com `dotnet user-secrets`:
 ```bash
 dotnet user-secrets set \
   "ConnectionStrings:DefaultConnection" \
-  "Host=localhost;Port=5433;Database=finance_tracker;Username=finance_tracker;Password=change_me" \
+  "Host=localhost;Port=5433;Database=finance_tracker;Username=finance_tracker;Password=finance_tracker_password" \
   --project backend/FinanceTracker.Api
-```3
+```
 
 Use o mesmo valor definido em `POSTGRES_PASSWORD` no arquivo `.env`.
 
@@ -52,16 +46,3 @@ Use o mesmo valor definido em `POSTGRES_PASSWORD` no arquivo `.env`.
 ```bash
 dotnet run --project backend/FinanceTracker.Api
 ```
-
-Com a aplicação em ambiente de desenvolvimento, a documentação Swagger fica disponível na URL exibida pelo terminal.
-
-## Comandos úteis
-
-```bash
-make up
-make down
-make restart
-make reset
-make psql
-```
-
