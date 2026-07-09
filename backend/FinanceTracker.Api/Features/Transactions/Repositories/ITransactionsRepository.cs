@@ -7,6 +7,7 @@ namespace FinanceTracker.Api.Features.Transactions
         Task<Transaction> CreateAsync(CreateTransactionRequest transaction);
         Task<IEnumerable<TransactionDto>> ListAsync();
         Task<IEnumerable<TransactionsReportDto>> GenerateReportAsync();
+        Task<ReportTotalDto> GenerateTotalAsync();
 
     }
 }

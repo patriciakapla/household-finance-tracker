@@ -73,5 +73,14 @@ namespace FinanceTracker.Api.Features.Transactions
 
             return Ok(new { Data = report });
         }
+
+
+        [HttpGet("report/total")]
+        public async Task<ActionResult<ReportTotalDto>> GenerateReportTotal()
+        {
+            var totals = await _transactionsRepository.GenerateTotalAsync();
+
+            return Ok(new { Data = totals });
+        }
     }
 }

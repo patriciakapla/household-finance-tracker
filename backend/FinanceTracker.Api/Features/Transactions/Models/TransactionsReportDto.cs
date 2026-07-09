@@ -8,8 +8,6 @@ namespace FinanceTracker.Api.Features.Transactions
         public double Revenue { get; set; }
         public double Expenses { get; set; }
         public double Balance { get; set; }
-        public decimal TotalIncome { get; set; }
-        public decimal TotalExpense { get; set; }
-        public decimal TotalBalance { get; set; }
+
     }
 }

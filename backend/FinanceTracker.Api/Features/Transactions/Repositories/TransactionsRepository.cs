@@ -76,5 +76,22 @@ namespace FinanceTracker.Api.Features.Transactions
 
             return await connection.QueryAsync<TransactionsReportDto>(sql);
         }
+        public async Task<ReportTotalDto> GenerateTotalAsync()
+        {
+            const string sql = """
+                SELECT
+                SUM(CASE WHEN t.type = 'revenue' THEN t.amount ELSE 0 END) AS TotalRevenue,
+                SUM(CASE WHEN t.type = 'expense' THEN t.amount ELSE 0 END) AS TotalExpenses,
+                SUM(CASE WHEN t.type = 'revenue' THEN t.amount ELSE 0 END) -
+                SUM(CASE WHEN t.type = 'expense' THEN t.amount ELSE 0 END) AS TotalBalance
+                FROM users u
+                LEFT JOIN transactions t ON u.id = t.user_id
+                WHERE u.active = true
+            """;
+
+            using var connection = _connectionFactory.CreateConnection();
+
+            return await connection.QuerySingleAsync<ReportTotalDto>(sql);
+        }
     }
 }
