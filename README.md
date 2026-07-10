@@ -1,14 +1,14 @@
-# Household Finance Tracker
+# Finance Tracker Backend
 
 API para controle de gastos residenciais desenvolvida em .NET.
 
-Para conhecer as decisões arquiteturais, veja o arquivo adr.md
+- [Decisões arquiteturais](./adr.md)
+- [Repositório do frontend](https://github.com/patriciakapla/finance-tracker-frontend)
 
 ## Requisitos
 
 - .NET 8 SDK
 - Docker
-- Docker Compose
 
 ## Configuração do banco local
 
